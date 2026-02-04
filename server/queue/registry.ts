@@ -16,6 +16,7 @@ import type { NutritionEstimationJobData } from "@/types";
 import type { AutoTaggingJobData } from "@/types";
 import type { AllergyDetectionJobData } from "@/types";
 import type { CaldavSyncJobData } from "@/types";
+import type { OriginInferenceJobData } from "@/types";
 
 import { createRecipeImportQueue } from "./recipe-import/queue";
 import { createImageImportQueue } from "./image-import/queue";
@@ -24,6 +25,7 @@ import { createNutritionEstimationQueue } from "./nutrition-estimation/queue";
 import { createAutoTaggingQueue } from "./auto-tagging/queue";
 import { createAllergyDetectionQueue } from "./allergy-detection/queue";
 import { createCaldavSyncQueue } from "./caldav-sync/queue";
+import { createOriginInferenceQueue } from "./origin-inference/queue";
 import { createScheduledTasksQueue, type ScheduledTaskJobData } from "./scheduled-tasks/queue";
 
 import { createLogger } from "@/server/logger";
@@ -46,6 +48,7 @@ interface QueueRegistry {
   autoTagging: Queue<AutoTaggingJobData>;
   allergyDetection: Queue<AllergyDetectionJobData>;
   caldavSync: Queue<CaldavSyncJobData>;
+  originInference: Queue<OriginInferenceJobData>;
   scheduledTasks: Queue<ScheduledTaskJobData>;
 }
 
@@ -72,6 +75,7 @@ export function initializeQueues(): QueueRegistry {
     autoTagging: createAutoTaggingQueue(),
     allergyDetection: createAllergyDetectionQueue(),
     caldavSync: createCaldavSyncQueue(),
+    originInference: createOriginInferenceQueue(),
     scheduledTasks: createScheduledTasksQueue(),
   };
 
@@ -88,7 +92,9 @@ export function initializeQueues(): QueueRegistry {
  */
 export function getQueues(): QueueRegistry {
   if (!registry) {
-    throw new Error("Queue registry not initialized. Call initializeQueues() at server startup.");
+    // Self-healing: If registry is missing (e.g. dev HMR), initialize it lazily
+    log.warn("Queue registry not found in getQueues(), initializing lazily...");
+    return initializeQueues();
   }
 
   return registry;
@@ -114,6 +120,7 @@ export async function closeAllQueues(): Promise<void> {
     registry.autoTagging.close(),
     registry.allergyDetection.close(),
     registry.caldavSync.close(),
+    registry.originInference.close(),
     registry.scheduledTasks.close(),
   ]);
 

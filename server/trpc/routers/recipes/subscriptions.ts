@@ -39,6 +39,16 @@ const onAllergyDetectionCompleted = createPolicyAwareSubscription(
   "allergyDetectionCompleted",
   "allergy detection completed"
 );
+const onOriginInferenceStarted = createPolicyAwareSubscription(
+  recipeEmitter,
+  "originInferenceStarted",
+  "origin inference started"
+);
+const onOriginInferenceCompleted = createPolicyAwareSubscription(
+  recipeEmitter,
+  "originInferenceCompleted",
+  "origin inference completed"
+);
 const onProcessingToast = createPolicyAwareSubscription(
   recipeEmitter,
   "processingToast",
@@ -63,6 +73,8 @@ export const recipesSubscriptions = router({
   onAutoTaggingCompleted,
   onAllergyDetectionStarted,
   onAllergyDetectionCompleted,
+  onOriginInferenceStarted,
+  onOriginInferenceCompleted,
   onProcessingToast,
   onRecipeBatchCreated,
 });

@@ -96,6 +96,7 @@ const REQUIRED_CONFIGS: ConfigDefinition[] = [
       apiKey: SERVER_CONFIG.AI_API_KEY || undefined,
       temperature: SERVER_CONFIG.AI_TEMPERATURE,
       maxTokens: SERVER_CONFIG.AI_MAX_TOKENS,
+      originInferenceMode: "disabled",
     }),
     sensitive: true, // sensitive due to API key
     description: `AI config (${SERVER_CONFIG.AI_ENABLED ? "enabled" : "disabled"})`,

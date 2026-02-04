@@ -17,11 +17,12 @@ export function loadDefaultPrompts(): PromptsConfigInput {
     unitConversion: readFileSync(join(PROMPTS_DIR, "unit-conversion.txt"), "utf-8"),
     nutritionEstimation: readFileSync(join(PROMPTS_DIR, "nutrition-estimation.txt"), "utf-8"),
     autoTagging: readFileSync(join(PROMPTS_DIR, "auto-tagging.txt"), "utf-8"),
+    originInference: readFileSync(join(PROMPTS_DIR, "origin-inference.txt"), "utf-8"),
   };
 }
 
 export async function loadPrompt(
-  name: "recipe-extraction" | "unit-conversion" | "nutrition-estimation" | "auto-tagging"
+  name: "recipe-extraction" | "unit-conversion" | "nutrition-estimation" | "auto-tagging" | "origin-inference"
 ): Promise<string> {
   const prompts = await getPrompts();
 
@@ -37,6 +38,9 @@ export async function loadPrompt(
 
     case "auto-tagging":
       return prompts.autoTagging;
+
+    case "origin-inference":
+      return prompts.originInference;
   }
 }
 

@@ -90,6 +90,31 @@ export function useRecipeSubscription(recipeId: string | null) {
     })
   );
 
+  // onProcessingToast - Generic processing toast from backend
+  useSubscription(
+    trpc.recipes.onProcessingToast.subscriptionOptions(undefined, {
+      enabled: !!recipeId,
+      onData: (payload) => {
+        if (payload.recipeId !== recipeId) return;
+
+        // Map titles to user-friendly strings
+        const titles: Record<string, string> = {
+          processingOrigin: "Inferring country origin",
+          originComplete: "Origin inference complete",
+        };
+
+        const title = titles[payload.titleKey] || payload.titleKey;
+
+        addToast({
+          severity: payload.severity || "primary",
+          title,
+          shouldShowTimeoutProgress: true,
+          radius: "full",
+        });
+      },
+    })
+  );
+
   // Listen for permission policy changes and revalidate
   useSubscription(
     trpc.permissions.onPolicyUpdated.subscriptionOptions(undefined, {

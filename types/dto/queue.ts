@@ -112,3 +112,15 @@ export type AddAllergyDetectionJobResult =
   | { status: "queued"; job: Job<AllergyDetectionJobData> }
   | { status: "duplicate"; existingJobId: string }
   | { status: "skipped"; reason: "disabled" | "no_allergies" };
+
+// Origin inference queue types
+export interface OriginInferenceJobData {
+  recipeId: string;
+  userId: string;
+  householdKey: string;
+}
+
+export type AddOriginInferenceJobResult =
+  | { status: "queued"; job: Job<OriginInferenceJobData> }
+  | { status: "duplicate"; existingJobId: string }
+  | { status: "skipped"; reason: "disabled" };

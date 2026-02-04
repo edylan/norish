@@ -13,6 +13,7 @@ import { startNutritionEstimationWorker } from "@/server/queue/nutrition-estimat
 import { startAutoTaggingWorker } from "@/server/queue/auto-tagging/worker";
 import { startAllergyDetectionWorker } from "@/server/queue/allergy-detection/worker";
 import { startCaldavSyncWorker } from "@/server/queue/caldav-sync/worker";
+import { startOriginInferenceWorker } from "@/server/queue/origin-inference/worker";
 import {
   startScheduledTasksWorker,
   stopScheduledTasksWorker,
@@ -52,6 +53,7 @@ export async function startWorkers(): Promise<void> {
     startAutoTaggingWorker(),
     startAllergyDetectionWorker(),
     startCaldavSyncWorker(),
+    startOriginInferenceWorker(),
   ]);
 
   // Scheduled tasks (always-running for cron jobs)

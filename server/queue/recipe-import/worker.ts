@@ -19,6 +19,7 @@ import { getRecipePermissionPolicy, getAIConfig } from "@/config/server-config-l
 import { getQueues } from "@/server/queue/registry";
 import { addAutoTaggingJob } from "@/server/queue/auto-tagging/producer";
 import { addAllergyDetectionJob } from "@/server/queue/allergy-detection/producer";
+import { addOriginInferenceJob } from "@/server/queue/origin-inference/producer";
 import {
   createRecipeWithRefs,
   recipeExistsByUrlForPolicy,
@@ -137,6 +138,15 @@ async function processImportJob(job: Job<RecipeImportJobData>): Promise<void> {
         userId,
         householdKey,
       });
+
+      // Trigger origin inference
+      if (aiConfig?.originInferenceMode === "enabled" || aiConfig?.originInferenceMode === "on-import") {
+        await addOriginInferenceJob(queues.originInference, {
+          recipeId: createdId,
+          userId,
+          householdKey,
+        });
+      }
     }
   }
 }
@@ -195,7 +205,7 @@ export async function startRecipeImportWorker(): Promise<void> {
       connection: getBullClient(),
       ...baseWorkerOptions,
       stalledInterval: STALLED_INTERVAL[QUEUE_NAMES.RECIPE_IMPORT],
-      concurrency: WORKER_CONCURRENCY[QUEUE_NAMES.RECIPE_IMPORT],
+      concurrency: 1,
     },
     handleJobFailed
   );

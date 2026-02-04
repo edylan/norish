@@ -118,6 +118,10 @@ export type { NutritionEstimate } from "./nutrition-estimator";
 export { generateTagsForRecipe, type RecipeForTagging } from "./auto-tagger";
 export type { AutoTaggingOutput } from "./auto-tagger";
 
+// Origin inference
+export { inferOriginForRecipe, type RecipeForOriginInference } from "./origin-inferrer";
+export type { OriginInferenceOutput } from "./schemas/origin.schema";
+
 // Allergy detection
 export { detectAllergiesInRecipe, type RecipeForAllergyDetection } from "./allergy-detector";
 export type { AllergyDetectionOutput } from "./allergy-detector";
@@ -133,6 +137,7 @@ export { recipeExtractionSchema } from "./schemas/recipe.schema";
 export { nutritionEstimationSchema } from "./schemas/nutrition.schema";
 export { conversionSchema } from "./schemas/conversion.schema";
 export { autoTaggingSchema } from "./schemas/auto-tagging.schema";
+export { originInferenceSchema } from "./schemas/origin.schema";
 
 // ============================================================================
 // Helpers - Utility functions

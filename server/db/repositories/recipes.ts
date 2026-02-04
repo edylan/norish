@@ -400,6 +400,10 @@ export async function listRecipes(
         userId: true,
         name: true,
         description: true,
+        origin: true,
+        originSubRegion: true,
+        cuisineStyle: true,
+        originReason: true,
         url: true,
         image: true,
         servings: true,
@@ -455,6 +459,10 @@ export async function listRecipes(
         .map((name) => ({ name })),
       averageRating,
       ratingCount,
+      origin: r.origin ?? null,
+      originSubRegion: r.originSubRegion ?? null,
+      cuisineStyle: r.cuisineStyle ?? null,
+      originReason: r.originReason ?? null,
     };
   });
 
@@ -486,6 +494,10 @@ export async function dashboardRecipe(id: string): Promise<RecipeDashboardDTO | 
       name: true,
       description: true,
       url: true,
+      origin: true,
+      originSubRegion: true,
+      cuisineStyle: true,
+      originReason: true,
       image: true,
       servings: true,
       prepMinutes: true,
@@ -537,6 +549,10 @@ export async function dashboardRecipe(id: string): Promise<RecipeDashboardDTO | 
       .map((name: string) => ({ name })),
     averageRating,
     ratingCount,
+    origin: r.origin ?? null,
+    originSubRegion: r.originSubRegion ?? null,
+    cuisineStyle: r.cuisineStyle ?? null,
+    originReason: r.originReason ?? null,
   };
 
   const parsed = RecipeDashboardSchema.safeParse(dto);
@@ -574,6 +590,10 @@ export async function createRecipeWithRefs(
     fat: payload.fat ?? null,
     carbs: payload.carbs ?? null,
     protein: payload.protein ?? null,
+    origin: payload.origin ?? null,
+    originSubRegion: payload.originSubRegion ?? null,
+    cuisineStyle: payload.cuisineStyle ?? null,
+    originReason: payload.originReason ?? null,
   };
 
   const finalRecipeId = await db.transaction(async (tx) => {
@@ -672,6 +692,10 @@ export async function getRecipeFull(id: string): Promise<FullRecipeDTO | null> {
       name: true,
       description: true,
       url: true,
+      origin: true,
+      originSubRegion: true,
+      cuisineStyle: true,
+      originReason: true,
       image: true,
       servings: true,
       prepMinutes: true,
@@ -740,6 +764,10 @@ export async function getRecipeFull(id: string): Promise<FullRecipeDTO | null> {
     userId: full.userId,
     name: full.name,
     description: full.description ?? null,
+    origin: full.origin ?? null,
+    originSubRegion: full.originSubRegion ?? null,
+    cuisineStyle: full.cuisineStyle ?? null,
+    originReason: full.originReason ?? null,
     url: full.url ?? null,
     image: full.image ?? null,
     servings: full.servings ?? 1,

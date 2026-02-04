@@ -35,6 +35,7 @@ export { createNutritionEstimationQueue } from "./nutrition-estimation/queue";
 export { createAutoTaggingQueue } from "./auto-tagging/queue";
 export { createAllergyDetectionQueue } from "./allergy-detection/queue";
 export { createCaldavSyncQueue } from "./caldav-sync/queue";
+export { createOriginInferenceQueue } from "./origin-inference/queue";
 export { createScheduledTasksQueue } from "./scheduled-tasks/queue";
 
 // Producers
@@ -45,6 +46,7 @@ export { addNutritionEstimationJob } from "./nutrition-estimation/producer";
 export { addAutoTaggingJob, isAutoTaggingJobActive } from "./auto-tagging/producer";
 export { addAllergyDetectionJob, isAllergyDetectionJobActive } from "./allergy-detection/producer";
 export { addCaldavSyncJob } from "./caldav-sync/producer";
+export { addOriginInferenceJob } from "./origin-inference/producer";
 export { initializeScheduledJobs } from "./scheduled-tasks/producer";
 
 // Workers
@@ -61,6 +63,7 @@ export {
   stopAllergyDetectionWorker,
 } from "./allergy-detection/worker";
 export { startCaldavSyncWorker, stopCaldavSyncWorker } from "./caldav-sync/worker";
+export { startOriginInferenceWorker, stopOriginInferenceWorker } from "./origin-inference/worker";
 export { startScheduledTasksWorker, stopScheduledTasksWorker } from "./scheduled-tasks/worker";
 
 // Types from @/types
@@ -79,6 +82,8 @@ export type {
   AddAllergyDetectionJobResult,
   CaldavSyncJobData,
   CaldavSyncOperation,
+  OriginInferenceJobData,
+  AddOriginInferenceJobResult,
 } from "@/types";
 
 // Types from scheduled-tasks
